@@ -5,6 +5,7 @@
 {% block content %}
 
 <h1>{{ notepad.title }}</h1>
+<br></br> 
 <p>{{ notepad.body }}</p>
 <a href="{{ url_for('notepad.index') }}">Back to Notepads</a>
 {% endblock %}
