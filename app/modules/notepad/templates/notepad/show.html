@@ -1,0 +1,16 @@
+{% extends "base_template.html" %}
+
+{% block title %}Notepad details{% endblock %}
+
+{% block content %}
+
+<h1>{{ notepad.title }}</h1>
+<!-- cambio -->
+<h2>Probando probando</h2>
+<p>{{ notepad.body }}</p>
+<a href="{{ url_for('notepad.index') }}">Back to Notepads</a>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('notepad.scripts') }}"></script>
+{% endblock %}
