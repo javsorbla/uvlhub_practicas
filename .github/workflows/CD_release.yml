@@ -1,0 +1,36 @@
+name: Weekly Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:    
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          pip install requests packaging  # requests: para llamar a la API de GitHub
+                                          # packaging: para parsear versiones semánticas
+
+      - name: Generate and publish release
+        run: python3 release.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_ACTOR: ${{ github.actor }}          # Usuario que ejecuta el workflow
