@@ -5,7 +5,7 @@ import requests
 from packaging import version  # Para parsear y comparar versiones semánticas
 
 REPO = os.getenv("GITHUB_REPOSITORY")
-TOKEN = os.getenv("GITHUB_TOKEN")      
+TOKEN = os.getenv("GITHUB_TOKEN")
 HEADERS = {"Authorization": f"token {TOKEN}"}
 API_URL = f"https://api.github.com/repos/{REPO}"
 

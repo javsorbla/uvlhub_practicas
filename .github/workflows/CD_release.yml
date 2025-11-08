@@ -1,9 +1,10 @@
 name: Weekly Release
 
 on:
-  push:
-    branches: [main]
-  workflow_dispatch:    
+  on:
+  schedule:
+    - cron: '0 22 * * 1'
+  workflow_dispatch:
 
 permissions:
   contents: write
