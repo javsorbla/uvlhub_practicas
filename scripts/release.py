@@ -44,24 +44,24 @@ def bump_version(base_version, commits):
     base = version.parse(base_version)
     major, minor, patch = base.release
 
-    level = 0  # 0=patch, 1=minor, 2=major
+    impact = 0
 
     for msg in commits:
-        if re.match(r"^(fix|chore)", msg):
-            level = max(level, 0)
-        elif re.match(r"^(feat|build)", msg):
-            level = max(level, 1)
-        elif re.match(r"^(feat!|build!)", msg):
-            level = max(level, 2)
+        if "!" in msg:  # cualquier commit con '!' fuerza major
+            impact = max(impact, 2)
+        elif msg.startswith("feat") or msg.startswith("build"):
+            impact = max(impact, 1)
+        else:
+            impact = max(impact, 0)
 
-    if level == 2:  # major
+    if impact == 2:  # major
         major += 1
         minor = 0
         patch = 0
-    elif level == 1:  # minor
+    elif impact == 1:  # minor
         minor += 1
         patch = 0
-    elif level == 0 and commits:  # patch
+    elif impact == 0 and commits:  # patch
         patch += 1
 
     return f"{major}.{minor}.{patch}"
