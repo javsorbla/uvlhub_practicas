@@ -2,8 +2,7 @@ name: Weekly Release
 
 on:
   schedule:
-    - cron: '49 22 * * 7'
-  workflow_dispatch:
+    - cron: '55 23 * * 7'
 
 permissions:
   contents: write
