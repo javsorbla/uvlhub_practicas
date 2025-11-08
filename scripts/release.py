@@ -92,6 +92,10 @@ def generate_changelog(commits):
         else:
             sections["Others"].append(clean)
 
+    for key in sections:
+        # elimina duplicados manteniendo el orden
+        sections[key] = list(dict.fromkeys(sections[key]))
+
     # Construye el texto final del changelog
     changelog = ""
     for title, items in sections.items():
