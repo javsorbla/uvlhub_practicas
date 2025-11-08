@@ -29,7 +29,7 @@ jobs:
                                           # packaging: para parsear versiones semánticas
 
       - name: Generate and publish release
-        run: python3 release.py
+        run: python3 scripts/release.py
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
