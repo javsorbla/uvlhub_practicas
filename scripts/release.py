@@ -4,9 +4,8 @@ import re
 import requests
 from packaging import version  # Para parsear y comparar versiones semánticas
 
-# === CONFIG ===
-REPO = os.getenv("GITHUB_REPOSITORY")  # Obtiene "usuario/repositorio" desde workflow
-TOKEN = os.getenv("GITHUB_TOKEN")      # Token para autenticación con la API
+REPO = os.getenv("GITHUB_REPOSITORY")
+TOKEN = os.getenv("GITHUB_TOKEN")      
 HEADERS = {"Authorization": f"token {TOKEN}"}
 API_URL = f"https://api.github.com/repos/{REPO}"
 
@@ -27,7 +26,7 @@ def get_latest_tag():
 def get_commits_since(tag):
     """Devuelve todos los mensajes de commit desde el tag dado"""
     if tag == "0.0.0":
-        # Primer release: tomar todos los commits
+        # Primera release: tomar todos los commits
         return run("git log HEAD --pretty=format:%s").splitlines()
     else:
         return run(f"git log {tag}..HEAD --pretty=format:%s").splitlines()
@@ -96,7 +95,7 @@ def generate_changelog(commits):
         # elimina duplicados manteniendo el orden
         sections[key] = list(dict.fromkeys(sections[key]))
 
-    # Construye el texto final del changelog
+    # Construye el texto final del changelog en formato markdown
     changelog = ""
     for title, items in sections.items():
         if items:
@@ -130,15 +129,15 @@ def main():
     print("Fetching tags and commits...")
     subprocess.run("git fetch --tags", shell=True)  # Asegura tener todos los tags
 
-    last_tag = get_latest_tag()      # Última versión publicada
-    commits = get_commits_since(last_tag)  # Commits desde esa versión
+    last_tag = get_latest_tag()
+    commits = get_commits_since(last_tag)
 
     if not commits:
         print("No new commits since last release")
         return
 
-    new_version = bump_version(last_tag, commits)  # Calcula nueva versión
-    changelog = generate_changelog(commits)       # Genera changelog agrupado
+    new_version = bump_version(last_tag, commits)
+    changelog = generate_changelog(commits)
 
     print(f"Creating release {new_version}")
     print(f"Changelog:\n{changelog}\n")
