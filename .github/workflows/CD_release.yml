@@ -2,7 +2,7 @@ name: Weekly Release
 
 on:
   schedule:
-    - cron: '2 0 * * 0'
+    - cron: '6 0 * * SUN'
   workflow_dispatch:
 
 permissions:
