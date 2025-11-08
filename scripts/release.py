@@ -26,7 +26,11 @@ def get_latest_tag():
 
 def get_commits_since(tag):
     """Devuelve todos los mensajes de commit desde el tag dado"""
-    return run(f"git log {tag}..HEAD --pretty=format:%s").splitlines()
+    if tag == "0.0.0":
+        # Primer release: tomar todos los commits
+        return run("git log HEAD --pretty=format:%s").splitlines()
+    else:
+        return run(f"git log {tag}..HEAD --pretty=format:%s").splitlines()
 
 
 def bump_version(base_version, commits):
