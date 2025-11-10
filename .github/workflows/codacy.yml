@@ -1,12 +1,10 @@
 name: Codacy CI
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  release:
+    # Trigger only when a release is published
+    types: [published]
+
 
 jobs:
   build:
